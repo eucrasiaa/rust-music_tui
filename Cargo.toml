@@ -1,0 +1,12 @@
+[package]
+name = "tui_music"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+ratatui = "0.29"
+crossterm = "0.28"      # cross-platform terminal backend for ratatui
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"        # ffprobe outputs JSON - very handy
+walkdir = "2"           # recursive dir traversal
+anyhow = "1"            # easy error handling for a beginner
