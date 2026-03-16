@@ -99,7 +99,7 @@ fn login_attempt(username:String, password:String, database:&Vec<UsrAccount>) ->
 
     let db_ent = database.iter().find(|entry| entry.username == username);
     if let Some(user) = db_ent {
-    // Found him! 'user' is your &UsrAccount
+        // Found him! 'user' is your &UsrAccount
         println!("[Sever] Found {}", user.username);
         let password_to_hash = format!("{}{}",password,user.password.salt);
         println!("[Server] toHash: {}", password_to_hash);
@@ -114,7 +114,7 @@ fn login_attempt(username:String, password:String, database:&Vec<UsrAccount>) ->
             println!("[Server] incorrect hash. sorry");
 
         }
-        
+
 
     } else {
         println!("[Server] didnt find username");
@@ -125,15 +125,15 @@ fn login_attempt(username:String, password:String, database:&Vec<UsrAccount>) ->
 fn create_user(username:String, password:String, database:&mut Vec<UsrAccount>, rng:&mut Lcg) -> bool{
     let db_ent = database.iter().find(|entry| entry.username == username);
     if let Some(user) = db_ent {
-    // Found him! 'user' is your &UsrAccount
+        // Found him! 'user' is your &UsrAccount
         println!("[Sever] Found {}. BAD! already taken", user.username);
         println!("[User] Username already in use. please try again!");
     } else {
         println!("[Server] didnt find username. good");
-        
+
 
         let new_salt = rng.get_range(1,255) as u8;
-        
+
         let password_to_hash = format!("{}{}",password,new_salt);
         println!("[Server] toHash: {}", password_to_hash);
         let hashed = mysim_hash(&password_to_hash);
@@ -167,25 +167,21 @@ fn main() {
     let mut rng = Lcg::new(0);
     rng.init_self();
     let mut user_db: Vec<UsrAccount> = Vec::new();
-    
+
     let mut input_text = String::new();
-
     loop    {
-    input_text.clear();
-
-    println!("\nChoose: [1] New User  [2] Login  [3] Exit");
-    print!("> ");
-    io::stdout().flush().unwrap();
-
-    io::stdin().read_line(&mut input_text).expect("Failed to read");
-    let choice = input_text.trim();
-
-    match choice {
-        "1" | "new user" => cu_h(&mut user_db, &mut rng),
-        "2" | "login" => li_h(&mut user_db),
-        "3" | "exit" => break,
+        input_text.clear();
+        println!("\nChoose: [1] New User  [2] Login  [3] Exit");
+        print!("> ");
+        io::stdout().flush().unwrap();
+        io::stdin().read_line(&mut input_text).expect("Failed to read");
+        let choice = input_text.trim();
+        match choice {
+            "1" | "new user" => cu_h(&mut user_db, &mut rng),
+            "2" | "login" => li_h(&mut user_db),
+            "3" | "exit" => break,
             _ => println!("Invalid option, try again."),
-    }
+        }
     }
 
 }
@@ -213,7 +209,7 @@ fn li_h(db:&mut Vec<UsrAccount>){
 fn helper_input(label: &str) -> (String,String){
 
     println!("--- {} ---", label);
-    
+
     let username = prompt("Username: ");
     let password = prompt("Password: ");
     (username, password)
